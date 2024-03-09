@@ -32,7 +32,7 @@ export default function QuoteFinder() {
 
           handleSubmit();
         }}
-        className="flex flex-row gap-3   flex-grow-0 w-auto  max-w-[650px] border-b-2 p-2  border-gray-300 "
+        className="flex flex-row gap-3   flex-grow-0 w-auto  max-w-[750px] border-b-2 p-2  border-gray-300 "
       >
         <input
           className="w-full  border-none  sm:font-serif sm:font-bold sm:text-3xl outline-none bg-transparent"
