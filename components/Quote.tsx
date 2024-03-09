@@ -28,7 +28,7 @@ export default function Quote({
       <div className="flex flex-col justify-between gap-5">
         <p className=" italic"> - {author}</p>
         <button
-          className=" self-start  flex-grow-0 bg-gradient-to-br hover:bg-gray-200   border-2 border-gray-300 hover:text-black  py-2 px-4 rounded-lg"
+          className=" self-start  flex-grow-0 bg-gradient-to-br hover:bg-gray-200 uppercase text-sm   border-[1px] border-gray-300 hover:text-black  py-1 px-2 rounded-lg"
           onClick={() => {
             copyToClipboard(`${quote} - ${author}`);
             setCopied(true);
