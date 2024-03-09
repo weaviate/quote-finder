@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="absolute inset-0 flex flex-col items-center  text-indigo-950 ">
       <div className="flex flex-col sm:w-3/4 px-5">
-        <div className="py-24">
+        <div className="sm:py-24 py-16">
           <div className="text-5xl font-extrabold ">
             <span className="font-serif">
               Quote<span className="opacity-25">Finder.</span>
