@@ -6,12 +6,14 @@ export default function Home() {
     <div className="absolute inset-0 flex flex-col items-center ">
       <div className="flex flex-col sm:w-3/4 px-5">
         <div className="py-24">
-          <div className="text-5xl font-extrabold ">QuoteFinder</div>
+          <div className="text-5xl font-extrabold ">
+            <span className="font-serif">QuoteFinder.</span>
+          </div>
           <div className="text-lg  py-5">
             Give your arguments some weight by finding a quote that supports it!
             Using Weaviates powerful vector database. In a world brimming with
             information, standing out with a well-supported argument is
-            essential. Weaviate's powerful vector database enhances this by
+            essential. Weaviate&apos;s powerful vector database enhances this by
             allowing you to underpin your points with the enduring wisdom of
             historical and contemporary thinkers.
           </div>

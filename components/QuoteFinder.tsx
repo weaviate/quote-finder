@@ -46,7 +46,7 @@ export default function QuoteFinder() {
           type="submit"
           className={` ${
             isPending ? "animate-pulse" : ""
-          } transition-all bg-gradient-to-br from-green-800 to-green-600 text-white  py-2 px-4 rounded-lg`}
+          } transition-all bg-gradient-to-br from-green-800 to-green-600  hover:scale-105  text-white  py-2 px-4 rounded-lg`}
         >
           {isPending ? "Searching..." : "Search"}
         </button>
@@ -54,9 +54,9 @@ export default function QuoteFinder() {
       {isPending ? (
         <Skeleton times={5} />
       ) : (
-        <div className="grid grid-cols-1 grid-flow-row auto-rows-min gap-10 py-3 divide-y-2">
+        <div className="grid grid-cols-1 grid-flow-row auto-rows-min gap-10 py-10 ">
           {quotesAndAuthorsArray
-            .filter((q) => q.quote.length <= 200)
+            .filter((q) => q.quote.length <= 400)
             .map((quoteAndAuthor) => (
               <Quote key={quoteAndAuthor.quote} {...quoteAndAuthor} />
             ))}
