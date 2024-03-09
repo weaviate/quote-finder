@@ -29,7 +29,7 @@ export default function QuoteFinder() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          e.currentTarget.reset();
+
           handleSubmit();
         }}
         className="flex flex-row gap-3  flex-grow-0 w-auto  max-w-[500px] border-[1px] rounded-xl p-2 border-green-600"
