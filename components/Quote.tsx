@@ -13,13 +13,13 @@ export default function Quote({
   return (
     <div className="max-w-prose">
       <h2 className="text-lg font-semibold  font-serif py-10">
-        <span className="relative inline-block">
+        <span className="relative hidden sm:inline-block">
           <div className="absolute  text-8xl font-extrabold opacity-75 -top-14 -left-10 text-green-600 ">
             &ldquo;
           </div>
         </span>
         {quote}
-        <span className="relative inline-block">
+        <span className="relative hidden sm:inline-block">
           <div className="absolute  text-8xl font-extrabold opacity-75  -bottom-20 -right-10 text-green-600 ">
             &rdquo;
           </div>
