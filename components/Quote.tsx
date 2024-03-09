@@ -14,13 +14,13 @@ export default function Quote({
     <div className="max-w-prose py-5 sm:py-12">
       <h2 className="text-xl font-semibold  font-serif  py-5">
         <span className="relative hidden sm:inline-block">
-          <div className="absolute  text-8xl font-extrabold opacity-75 -top-16 -left-10 text-green-600 ">
+          <div className="absolute  text-8xl font-extrabold  -top-16 -left-10 text-black opacity-10 ">
             &ldquo;
           </div>
         </span>
         {quote}
         <span className="relative hidden sm:inline-block">
-          <div className="absolute  text-8xl font-extrabold opacity-75  -bottom-20 -right-12 text-green-600 ">
+          <div className="absolute  text-8xl font-extrabold  -bottom-20 -right-13 text-black opacity-10 ">
             &rdquo;
           </div>
         </span>
@@ -28,7 +28,7 @@ export default function Quote({
       <div className="flex flex-col justify-between gap-5">
         <p className=" italic"> - {author}</p>
         <button
-          className=" self-start  flex-grow-0 bg-gradient-to-br hover:bg-gray-200   border-2 border-gray-200 hover:text-black  py-2 px-4 rounded-lg"
+          className=" self-start  flex-grow-0 bg-gradient-to-br hover:bg-gray-200   border-2 border-gray-300 hover:text-black  py-2 px-4 rounded-lg"
           onClick={() => {
             copyToClipboard(`${quote} - ${author}`);
             setCopied(true);
