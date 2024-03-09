@@ -18,15 +18,15 @@ export default function Home() {
             historical and contemporary thinkers.
           </div>
           <a href="https://weaviate.io" target="_blank">
-            <div className="flex flex-row items-center gap-3">
-              <div className=" text-xl">powered by</div>
+            <div className="flex flex-row   items-center gap-3">
+              <div className=" text-lg sm:block hidden">powered by</div>
               <Image
                 src="/weaviate.png"
                 alt="Weaviate logo"
                 width={150}
                 height={150}
               />
-              <div className="text-xl">Weaviate</div>
+              <div className="text-lg sm:block hidden">Weaviate</div>
             </div>
           </a>
         </div>

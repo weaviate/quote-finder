@@ -11,16 +11,16 @@ export default function Quote({
   const [copiedText, copyToClipboard] = useCopyToClipboard();
   const [copied, setCopied] = useState(false);
   return (
-    <div className="max-w-prose">
-      <h2 className="text-lg font-semibold  font-serif py-10">
+    <div className="max-w-prose py-5 sm:py-12">
+      <h2 className="text-xl font-semibold  font-serif  py-5">
         <span className="relative hidden sm:inline-block">
-          <div className="absolute  text-8xl font-extrabold opacity-75 -top-14 -left-10 text-green-600 ">
+          <div className="absolute  text-8xl font-extrabold opacity-75 -top-16 -left-10 text-green-600 ">
             &ldquo;
           </div>
         </span>
         {quote}
         <span className="relative hidden sm:inline-block">
-          <div className="absolute  text-8xl font-extrabold opacity-75  -bottom-20 -right-10 text-green-600 ">
+          <div className="absolute  text-8xl font-extrabold opacity-75  -bottom-20 -right-12 text-green-600 ">
             &rdquo;
           </div>
         </span>
