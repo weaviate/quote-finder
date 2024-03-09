@@ -32,10 +32,10 @@ export default function QuoteFinder() {
 
           handleSubmit();
         }}
-        className="flex flex-row gap-3  flex-grow-0 w-auto  max-w-[500px] border-[1px] rounded-xl p-2 border-green-600"
+        className="flex flex-row gap-3   flex-grow-0 w-auto  max-w-[650px] border-b-2 p-2  border-gray-300 "
       >
         <input
-          className="w-full  border-none pl-2  outline-none bg-transparent"
+          className="w-full  border-none  font-serif sm:font-bold sm:text-3xl outline-none bg-transparent"
           type="text"
           placeholder="What's your argument?"
           onChange={(e) => {
