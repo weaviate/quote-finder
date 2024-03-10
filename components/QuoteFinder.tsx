@@ -52,7 +52,7 @@ export default function QuoteFinder() {
           {isPending ? "Searching" : "Search"}
         </button>
       </form>
-      {true ? (
+      {isPending ? (
         <Skeleton times={5} />
       ) : (
         <div className="grid grid-cols-1 grid-flow-row auto-rows-min gap-10 py-10 ">
