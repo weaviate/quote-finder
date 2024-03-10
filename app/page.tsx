@@ -19,18 +19,22 @@ export default function Home() {
             points with the enduring wisdom of historical and contemporary
             thinkers.
           </div>
-          <a href="https://weaviate.io" target="_blank">
-            <div className="flex flex-row   items-center gap-3">
-              <div className=" text-lg sm:block hidden">powered by</div>
+          <div className="flex flex-row   items-center gap-3">
+            <div className=" text-lg sm:block hidden">powered by</div>
+            <a
+              className="hover:scale-105 transition-all duration-250"
+              href="https://weaviate.io"
+              target="_blank"
+            >
               <Image
                 src="/weaviate.png"
                 alt="Weaviate logo"
                 width={150}
                 height={150}
               />
-              <div className="text-lg sm:block hidden">Weaviate</div>
-            </div>
-          </a>
+            </a>
+            <div className="text-lg sm:block hidden">Weaviate</div>
+          </div>
         </div>
         <QuoteFinder />
       </div>

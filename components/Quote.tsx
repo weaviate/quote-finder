@@ -11,7 +11,7 @@ export default function Quote({
   const [copiedText, copyToClipboard] = useCopyToClipboard();
   const [copied, setCopied] = useState(false);
   return (
-    <div className="max-w-prose py-5 sm:py-12">
+    <div className="max-w-prose py-5 sm:py-5">
       <h2 className="text-xl font-semibold  font-serif  py-5">
         <span className="relative hidden sm:inline-block">
           <div className="absolute  text-8xl font-extrabold  -top-16 -left-10 text-black opacity-10 ">
