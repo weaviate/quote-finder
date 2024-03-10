@@ -36,7 +36,7 @@ export default function QuoteFinder() {
         className="flex flex-row gap-3   flex-grow-0 w-auto  max-w-[750px] py-2  "
       >
         <input
-          className="w-full   sm:font-serif sm:font-bold sm:text-3xl outline-none bg-transparent border-b-2 sm:py-3 focus:border-green-700"
+          className="w-full   sm:font-serif sm:font-bold sm:text-3xl outline-none bg-transparent border-b-2 rounded-none sm:py-3 focus:border-green-700"
           type="text"
           placeholder="What's your argument?"
           onChange={(e) => {
