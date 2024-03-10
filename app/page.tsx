@@ -13,11 +13,11 @@ export default function Home() {
           </div>
           <div className="text-lg  py-5">
             Give your arguments some weight by finding a quote that supports it!
-            Using Weaviates powerful vector database. In a world brimming with
-            information, standing out with a well-supported argument is
-            essential. Weaviate&apos;s powerful vector database enhances this by
-            allowing you to underpin your points with the enduring wisdom of
-            historical and contemporary thinkers.
+            In a world brimming with information, standing out with a
+            well-supported argument is essential. Weaviate&apos;s powerful
+            vector database enhances this by allowing you to underpin your
+            points with the enduring wisdom of historical and contemporary
+            thinkers.
           </div>
           <a href="https://weaviate.io" target="_blank">
             <div className="flex flex-row   items-center gap-3">
