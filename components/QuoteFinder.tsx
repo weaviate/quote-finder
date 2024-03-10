@@ -3,6 +3,7 @@
 import { findQuote } from "@/actions";
 import { useState, useTransition } from "react";
 import Quote from "./Quote";
+import { motion } from "framer-motion";
 import Skeleton from "./Skeleton";
 
 export default function QuoteFinder() {
@@ -32,10 +33,10 @@ export default function QuoteFinder() {
 
           handleSubmit();
         }}
-        className="flex flex-row gap-3   flex-grow-0 w-auto  max-w-[750px] border-b-2 p-2  border-gray-300 "
+        className="flex flex-row gap-3   flex-grow-0 w-auto  max-w-[750px] py-2  "
       >
         <input
-          className="w-full  border-none  sm:font-serif sm:font-bold sm:text-3xl outline-none bg-transparent"
+          className="w-full   sm:font-serif sm:font-bold sm:text-3xl outline-none bg-transparent border-b-2 sm:py-3 focus:border-green-700"
           type="text"
           placeholder="What's your argument?"
           onChange={(e) => {
@@ -46,12 +47,12 @@ export default function QuoteFinder() {
           type="submit"
           className={` ${
             isPending ? "animate-pulse" : ""
-          } transition-all bg-gradient-to-br from-green-800 to-green-600  hover:scale-105  text-white  py-2 px-4 rounded-lg`}
+          } transition-all bg-gradient-to-br h-10  self-end w-32 from-green-800 to-green-600  hover:scale-105  text-white  py-2 px-4 rounded-lg`}
         >
-          {isPending ? "Searching..." : "Search"}
+          {isPending ? "Searching" : "Search"}
         </button>
       </form>
-      {isPending ? (
+      {true ? (
         <Skeleton times={5} />
       ) : (
         <div className="grid grid-cols-1 grid-flow-row auto-rows-min gap-10 py-10 ">
