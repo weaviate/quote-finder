@@ -1,17 +1,12 @@
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { useState } from "react";
+import { QuoteType } from "@/types";
 
-export default function Quote({
-  quote,
-  author,
-}: {
-  quote: string;
-  author: string;
-}) {
+export default function Quote({ quote, author }: QuoteType) {
   const [copiedText, copyToClipboard] = useCopyToClipboard();
   const [copied, setCopied] = useState(false);
   return (
-    <div className="max-w-prose py-5 sm:py-5">
+    <div className="max-w-prose py-2 sm:py-5">
       <h2 className="text-xl font-semibold  font-serif  py-5">
         <span className="relative hidden sm:inline-block">
           <div className="absolute  text-8xl font-extrabold  -top-16 -left-10 text-black opacity-10 ">
