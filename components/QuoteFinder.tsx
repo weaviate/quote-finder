@@ -63,33 +63,35 @@ export default function QuoteFinder({
         <Skeleton times={5} />
       ) : (
         <div>
-          <div className="flex flex-row items-center justify-between max-w-prose py-5">
-            <div className="uppercase text-sm">
-              {quotesAndAuthorsArray.length} results
-            </div>
-            <div>
-              <button
-                className="sm:hidden bg-gradient-to-br hover:bg-gray-200 uppercase text-sm   border-[1px] border-gray-300 hover:text-black  py-1 px-2 rounded-lg"
-                onClick={() => {
-                  navigator.share(
-                    // current url
-                    { url: window.location.href }
-                  );
-                }}
-              >
-                share
-              </button>
+          {quotesAndAuthorsArray.length > 0 ? (
+            <div className="flex flex-row items-center justify-between max-w-prose py-5">
+              <div className="uppercase text-sm">
+                {quotesAndAuthorsArray.length} results
+              </div>
+              <div>
+                <button
+                  className="sm:hidden bg-gradient-to-br hover:bg-gray-200 uppercase text-sm   border-[1px] border-gray-300 hover:text-black  py-1 px-2 rounded-lg"
+                  onClick={() => {
+                    navigator.share(
+                      // current url
+                      { url: window.location.href }
+                    );
+                  }}
+                >
+                  share
+                </button>
 
-              <button
-                className="hidden sm:block bg-gradient-to-br hover:bg-gray-200 uppercase text-sm   border-[1px] border-gray-300 hover:text-black  py-1 px-2 rounded-lg"
-                onClick={() => {
-                  copyToClipboard(window.location.href);
-                }}
-              >
-                copy link to results
-              </button>
+                <button
+                  className="hidden sm:block bg-gradient-to-br hover:bg-gray-200 uppercase text-sm   border-[1px] border-gray-300 hover:text-black  py-1 px-2 rounded-lg"
+                  onClick={() => {
+                    copyToClipboard(window.location.href);
+                  }}
+                >
+                  copy link to results
+                </button>
+              </div>
             </div>
-          </div>
+          ) : null}
           <div className="grid grid-cols-1 grid-flow-row auto-rows-min gap-10 py-5 ">
             {quotesAndAuthorsArray.map((quoteAndAuthor) => (
               <Quote key={quoteAndAuthor.quote} {...quoteAndAuthor} />
