@@ -64,7 +64,7 @@ export default function QuoteFinder({
       ) : (
         <div>
           <div className="flex flex-row items-center justify-between max-w-prose py-5">
-            <div className="uppercase">
+            <div className="uppercase text-sm">
               {quotesAndAuthorsArray.length} results
             </div>
             <div>
