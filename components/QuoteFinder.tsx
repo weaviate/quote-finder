@@ -1,27 +1,33 @@
 "use client";
 
-import { findQuote } from "@/actions";
+import { findQuotesByArgument } from "@/actions";
 import { useState, useTransition } from "react";
 import Quote from "./Quote";
-import { motion } from "framer-motion";
 import Skeleton from "./Skeleton";
+import { useCopyToClipboard } from "@uidotdev/usehooks";
+import { QuoteType } from "@/types";
 
-export default function QuoteFinder() {
-  const [searchTerm, setSearchTerm] = useState("");
+export default function QuoteFinder({
+  initialSearchTerm,
+  initialSearchResults,
+}: {
+  initialSearchTerm?: string;
+  initialSearchResults?: QuoteType[];
+}) {
+  const [searchTerm, setSearchTerm] = useState(initialSearchTerm ?? "");
   const [quotesAndAuthorsArray, setQuotesAndAuthorsArray] = useState<
-    {
-      quote: string;
-      author: string;
-    }[]
-  >([]);
+    QuoteType[]
+  >(initialSearchResults ?? []);
 
   const [isPending, startTransition] = useTransition();
 
+  const [copiedText, copyToClipboard] = useCopyToClipboard();
+
   const handleSubmit = async () => {
     startTransition(async () => {
-      const quotesAndAuthorsArray = await findQuote(searchTerm);
+      const quotesAndAuthorsArray = await findQuotesByArgument(searchTerm);
       setQuotesAndAuthorsArray(quotesAndAuthorsArray);
-      console.log(quotesAndAuthorsArray);
+      window.history.pushState({}, "", `/?search=${searchTerm}`);
     });
   };
 
@@ -39,6 +45,7 @@ export default function QuoteFinder() {
           className="w-full   sm:font-serif sm:font-bold sm:text-3xl outline-none bg-transparent border-b-2 rounded-none sm:py-3 focus:border-green-700"
           type="text"
           placeholder="What's your argument?"
+          value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
           }}
@@ -55,12 +62,39 @@ export default function QuoteFinder() {
       {isPending ? (
         <Skeleton times={5} />
       ) : (
-        <div className="grid grid-cols-1 grid-flow-row auto-rows-min gap-10 py-10 ">
-          {quotesAndAuthorsArray
-            .filter((q) => q.quote.length <= 400)
-            .map((quoteAndAuthor) => (
+        <div>
+          <div className="flex flex-row items-center justify-between max-w-prose py-5">
+            <div className="uppercase">
+              {quotesAndAuthorsArray.length} results
+            </div>
+            <div>
+              <button
+                className="sm:hidden bg-gradient-to-br hover:bg-gray-200 uppercase text-sm   border-[1px] border-gray-300 hover:text-black  py-1 px-2 rounded-lg"
+                onClick={() => {
+                  navigator.share(
+                    // current url
+                    { url: window.location.href }
+                  );
+                }}
+              >
+                share
+              </button>
+
+              <button
+                className="hidden sm:block bg-gradient-to-br hover:bg-gray-200 uppercase text-sm   border-[1px] border-gray-300 hover:text-black  py-1 px-2 rounded-lg"
+                onClick={() => {
+                  copyToClipboard(window.location.href);
+                }}
+              >
+                copy link to results
+              </button>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 grid-flow-row auto-rows-min gap-10 py-5 ">
+            {quotesAndAuthorsArray.map((quoteAndAuthor) => (
               <Quote key={quoteAndAuthor.quote} {...quoteAndAuthor} />
             ))}
+          </div>
         </div>
       )}
     </div>

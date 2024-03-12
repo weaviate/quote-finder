@@ -4,6 +4,7 @@ import weaviate, {
   ObjectsBatcher,
   ApiKey,
 } from "weaviate-ts-client";
+import { QuoteType } from "./types";
 
 const client: WeaviateClient = weaviate.client({
   scheme: "https",
@@ -11,13 +12,31 @@ const client: WeaviateClient = weaviate.client({
   headers: { "X-OpenAI-Api-Key": process.env.OPENAI_APIKEY!! }, // Replace with your inference API key
 });
 
-export async function findQuote(searchTerm: string) {
+export async function findQuotesByArgument(searchTerm: string) {
   const res = await client.graphql
     .get()
     .withClassName("Quote")
     .withFields("quote author")
     .withNearText({ concepts: [searchTerm] })
     .withLimit(10)
+    .do();
+
+  const quotesAndAuthorsArray: QuoteType[] = res.data.Get.Quote.map(
+    (quote: any) => ({
+      quote: quote.quote,
+      author: quote.author,
+    })
+  );
+
+  return quotesAndAuthorsArray.filter((q) => q.quote.length <= 400);
+}
+
+export async function findQuotesByEmbeddingPosition(vector: number[]) {
+  const res = await client.graphql
+    .get()
+    .withClassName("Quote")
+    .withFields("quote author")
+    .withNearVector({ vector: vector })
     .do();
 
   const quotesAndAuthorsArray: {
