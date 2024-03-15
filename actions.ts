@@ -5,6 +5,7 @@ import weaviate, {
   ApiKey,
 } from "weaviate-ts-client";
 import { QuoteType } from "./types";
+import { kv } from "@vercel/kv";
 
 const client: WeaviateClient = weaviate.client({
   scheme: "https",
@@ -13,39 +14,47 @@ const client: WeaviateClient = weaviate.client({
 });
 
 export async function findQuotesByArgument(searchTerm: string) {
+  const cachedResult = await kv.get<QuoteType[]>(searchTerm);
+
+  if (cachedResult) {
+    return cachedResult;
+  }
+
   const res = await client.graphql
     .get()
     .withClassName("Quote")
-    .withFields("quote author")
+    .withFields("quote author _additional {distance}")
     .withNearText({ concepts: [searchTerm] })
     .withLimit(10)
     .do();
+
+  const distances = res.data.Get.Quote.map(
+    (quote: any) => quote._additional.distance
+  );
+
+  const maxDistance = Math.max(...distances);
+  const minDistance = Math.min(...distances);
 
   const quotesAndAuthorsArray: QuoteType[] = res.data.Get.Quote.map(
     (quote: any) => ({
       quote: quote.quote,
       author: quote.author,
+      distance: quote._additional.distance,
+      relativeDistance:
+        100 -
+        parseInt(
+          (
+            ((quote._additional.distance - minDistance) /
+              (maxDistance - minDistance)) *
+            100
+          ).toFixed(0)
+        ),
     })
   );
 
+  console.log(JSON.stringify(quotesAndAuthorsArray));
+
+  await kv.set(searchTerm, JSON.stringify(quotesAndAuthorsArray));
+
   return quotesAndAuthorsArray.filter((q) => q.quote.length <= 400);
-}
-
-export async function findQuotesByEmbeddingPosition(vector: number[]) {
-  const res = await client.graphql
-    .get()
-    .withClassName("Quote")
-    .withFields("quote author")
-    .withNearVector({ vector: vector })
-    .do();
-
-  const quotesAndAuthorsArray: {
-    quote: string;
-    author: string;
-  }[] = res.data.Get.Quote.map((quote: any) => ({
-    quote: quote.quote,
-    author: quote.author,
-  }));
-
-  return quotesAndAuthorsArray;
 }
