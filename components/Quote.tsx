@@ -68,7 +68,7 @@ export default function Quote({
     <div className="max-w-prose py-2 sm:py-5 ">
       <div className="flex flex-col z-40">
         <div className="flex-row flex items-center gap-5">
-          <div className="group text-xl shrink-0 relative font-serif font-bold rounded-full shadow-lg bg-transparent border-[1px] size-12 sm:size-24 items-center justify-center flex text-serif  ">
+          <div className="group text-xl shrink-0 relative font-serif font-bold rounded-full shadow-lg bg-transparent border-[1px] size-12 sm:size-24 items-center justify-center flex  text-serif  ">
             {index + 1}.{/* {quote.distance} */}
             <div className="absolute flex flex-col items-center sm:-bottom-2  -bottom-4">
               <div className="  cursor-pointer  text-xs   border-[1px] rounded-lg w-16 text-center shadow-lg  px-2 py-1 bg-highlight  text-black ">
@@ -80,7 +80,7 @@ export default function Quote({
               </div>
             </div>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             <h2 className="text-xl font-semibold  font-serif  py-3">
               <span
                 className={`relative hidden sm:inline-block transition-all duration-250 ${
@@ -92,7 +92,7 @@ export default function Quote({
                 </div>
               </span>
               <div
-                className="animate-pop-in"
+                className="animate-pop-in sm:text-center"
                 dangerouslySetInnerHTML={{ __html: preparedQuote }}
               />
               <span
