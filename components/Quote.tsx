@@ -106,7 +106,10 @@ export default function Quote({
               </span>
             </h2>
             <div className="flex flex-col justify-between gap-5">
-              <p className=" italic self-center"> - {quote.author} -</p>
+              <p className=" italic text-center self-center">
+                {" "}
+                - {quote.author} -
+              </p>
             </div>
           </div>
           <button
