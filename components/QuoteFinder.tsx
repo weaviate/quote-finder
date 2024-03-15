@@ -6,6 +6,7 @@ import Quote from "./Quote";
 import Skeleton from "./Skeleton";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { QuoteType } from "@/types";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 export default function QuoteFinder({
   initialSearchTerm,
@@ -18,6 +19,8 @@ export default function QuoteFinder({
   const [quotesAndAuthorsArray, setQuotesAndAuthorsArray] = useState<
     QuoteType[]
   >(initialSearchResults ?? []);
+
+  const wordSet = new Set(searchTerm.split(" "));
 
   const [isPending, startTransition] = useTransition();
 
@@ -54,9 +57,9 @@ export default function QuoteFinder({
           type="submit"
           className={` ${
             isPending ? "animate-pulse" : ""
-          } transition-all bg-gradient-to-br h-10  self-end w-32 from-green-800 to-green-600  hover:scale-105  text-white  py-2 px-4 rounded-lg`}
+          } transition-all bg-gradient-to-br h-10  self-end   hover:scale-105   bg-highlight py-2 px-4 rounded-lg`}
         >
-          {isPending ? "Searching" : "Search"}
+          <MagnifyingGlassIcon className="h-5 w-5" />
         </button>
       </form>
       {isPending ? (
@@ -93,8 +96,14 @@ export default function QuoteFinder({
             </div>
           ) : null}
           <div className="grid grid-cols-1 grid-flow-row auto-rows-min gap-10 py-5 ">
-            {quotesAndAuthorsArray.map((quoteAndAuthor) => (
-              <Quote key={quoteAndAuthor.quote} {...quoteAndAuthor} />
+            {quotesAndAuthorsArray.map((quoteAndAuthor, index) => (
+              <Quote
+                key={quoteAndAuthor.quote}
+                searchTermWordSet={wordSet}
+                searchTerm={searchTerm}
+                quote={quoteAndAuthor}
+                index={index}
+              />
             ))}
           </div>
         </div>
