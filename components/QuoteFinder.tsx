@@ -29,6 +29,7 @@ export default function QuoteFinder({
   const handleSubmit = async () => {
     startTransition(async () => {
       const quotesAndAuthorsArray = await findQuotesByArgument(searchTerm);
+      console.log(quotesAndAuthorsArray);
       setQuotesAndAuthorsArray(quotesAndAuthorsArray);
       window.history.pushState({}, "", `/?search=${searchTerm}`);
     });
