@@ -17,7 +17,7 @@ export async function findQuotesByArgument(searchTerm: string) {
   const cachedResult = await kv.get<QuoteType[]>(searchTerm);
 
   if (cachedResult) {
-    return cachedResult;
+    return cachedResult.filter((q) => q.quote.length <= 400);
   }
 
   const res = await client.graphql
