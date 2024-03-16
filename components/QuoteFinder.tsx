@@ -6,7 +6,12 @@ import Quote from "./Quote";
 import Skeleton from "./Skeleton";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { QuoteType } from "@/types";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import {
+  BackspaceIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
+import { examples } from "@/examples";
+import Link from "next/link";
 
 export default function QuoteFinder({
   initialSearchTerm,
@@ -26,12 +31,18 @@ export default function QuoteFinder({
 
   const [copiedText, copyToClipboard] = useCopyToClipboard();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (newSearchTerm?: string) => {
     startTransition(async () => {
-      const quotesAndAuthorsArray = await findQuotesByArgument(searchTerm);
+      const quotesAndAuthorsArray = await findQuotesByArgument(
+        newSearchTerm ?? searchTerm
+      );
       console.log(quotesAndAuthorsArray);
       setQuotesAndAuthorsArray(quotesAndAuthorsArray);
-      window.history.pushState({}, "", `/?search=${searchTerm}`);
+      window.history.pushState(
+        {},
+        "",
+        `/?search=${newSearchTerm ?? searchTerm}`
+      );
     });
   };
 
@@ -43,7 +54,7 @@ export default function QuoteFinder({
 
           handleSubmit();
         }}
-        className="flex flex-row gap-3   flex-grow-0 w-auto  max-w-[750px] py-2  "
+        className="flex flex-row gap-2   flex-grow-0 w-auto  max-w-[750px] py-2  "
       >
         <input
           className="w-full   sm:font-serif sm:font-bold sm:text-3xl outline-none bg-transparent border-b-2 rounded-none sm:py-3 focus:border-highlight"
@@ -51,9 +62,24 @@ export default function QuoteFinder({
           placeholder="What's your argument?"
           value={searchTerm}
           onChange={(e) => {
+            if (searchTerm !== "") {
+              setQuotesAndAuthorsArray([]);
+            }
             setSearchTerm(e.target.value);
           }}
         />
+
+        <button
+          className="  bg-black bg-opacity-10 h-10  self-end   hover:scale-105    py-2 px-4 rounded-lg"
+          onClick={(e) => {
+            e.preventDefault();
+            setQuotesAndAuthorsArray([]);
+            setSearchTerm("");
+          }}
+        >
+          <BackspaceIcon className="h-5 w-5" />
+        </button>
+
         <button
           type="submit"
           className={` ${
@@ -95,7 +121,26 @@ export default function QuoteFinder({
                 </button>
               </div>
             </div>
-          ) : null}
+          ) : (
+            <div className="py-5">
+              <div className="uppercase text-sm ">Example Arguments</div>
+              <div className="flex flex-col gap-1 py-2">
+                {examples.map((example, index) => (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      setSearchTerm(example);
+                      handleSubmit(example);
+                    }}
+                    className=" cursor-default relative shrink-0 self-start z-10"
+                  >
+                    {example}
+                    <div className="absolute inset-x-0 bottom-0 h-2 bg-highlight -z-10"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           <div className="grid grid-cols-1 grid-flow-row auto-rows-min gap-10 py-5 ">
             {quotesAndAuthorsArray.map((quoteAndAuthor, index) => (
               <Quote
