@@ -32,18 +32,19 @@ export default function QuoteFinder({
   const [copiedText, copyToClipboard] = useCopyToClipboard();
 
   const handleSubmit = async (newSearchTerm?: string) => {
-    startTransition(async () => {
-      const quotesAndAuthorsArray = await findQuotesByArgument(
-        newSearchTerm ?? searchTerm
-      );
-      console.log(quotesAndAuthorsArray);
-      setQuotesAndAuthorsArray(quotesAndAuthorsArray);
-      window.history.pushState(
-        {},
-        "",
-        `/?search=${newSearchTerm ?? searchTerm}`
-      );
-    });
+    (newSearchTerm ?? searchTerm).length > 0 &&
+      startTransition(async () => {
+        const quotesAndAuthorsArray = await findQuotesByArgument(
+          newSearchTerm ?? searchTerm
+        );
+        console.log(quotesAndAuthorsArray);
+        setQuotesAndAuthorsArray(quotesAndAuthorsArray);
+        window.history.pushState(
+          {},
+          "",
+          `/?search=${newSearchTerm ?? searchTerm}`
+        );
+      });
   };
 
   return (
