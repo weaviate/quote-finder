@@ -10,6 +10,7 @@ import { kv } from "@vercel/kv";
 const client: WeaviateClient = weaviate.client({
   scheme: "https",
   host: process.env.WCS_URL!!, // Replace with your endpoint
+  apiKey: new ApiKey(process.env.WCS_API_KEY!!), // Replace with your API key
   headers: { "X-OpenAI-Api-Key": process.env.OPENAI_APIKEY!! }, // Replace with your inference API key
 });
 
@@ -22,20 +23,20 @@ export async function findQuotesByArgument(searchTerm: string) {
 
   const res = await client.graphql
     .get()
-    .withClassName("Quote")
+    .withClassName("QuoteFinder")
     .withFields("quote author _additional {distance}")
     .withNearText({ concepts: [searchTerm] })
     .withLimit(10)
     .do();
 
-  const distances = res.data.Get.Quote.map(
+  const distances = res.data.Get.QuoteFinder.map(
     (quote: any) => quote._additional.distance
   );
 
   const maxDistance = Math.max(...distances);
   const minDistance = Math.min(...distances);
 
-  const quotesAndAuthorsArray: QuoteType[] = res.data.Get.Quote.map(
+  const quotesAndAuthorsArray: QuoteType[] = res.data.Get.QuoteFinder.map(
     (quote: any) => ({
       quote: quote.quote,
       author: quote.author,
