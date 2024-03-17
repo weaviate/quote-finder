@@ -72,6 +72,7 @@ export default function QuoteFinder({
 
         <button
           className="  bg-black bg-opacity-10 h-10  self-end   hover:scale-105    py-2 px-4 rounded-lg"
+          type="button"
           onClick={(e) => {
             e.preventDefault();
             setQuotesAndAuthorsArray([]);

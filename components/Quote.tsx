@@ -75,8 +75,8 @@ export default function Quote({
                 <CountUp end={quote.distance * 1000} />
               </div>
               <div className="absolute rounded-lg p-2 mt-8 border-[1px] shadow-lg text-xs w-48 z-40 text-center  bg-stone-100  opacity-0 transition-all duration-250 group-hover:opacity-100">
-                The score 0.541 indicates the semantic relationship between the
-                quote and your query: “{searchTerm}”.
+                The score {quote.distance.toFixed(3)} indicates the semantic
+                relationship between the quote and your query: “{searchTerm}”.
               </div>
             </div>
           </div>
