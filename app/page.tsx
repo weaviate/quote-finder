@@ -1,6 +1,7 @@
 import QuoteFinder from "@/components/QuoteFinder";
 import Image from "next/image";
 import { findQuotesByArgument } from "@/actions";
+import Link from "next/link";
 
 export default async function Home({
   params,
@@ -20,17 +21,19 @@ export default async function Home({
       <div className="flex flex-col sm:w-3/4 px-5">
         <div className="sm:py-24 py-16">
           <div className="text-5xl font-extrabold ">
-            <span className="font-serif">
+            <a className="font-serif" href="/">
               Quote<span className="opacity-25">Finder.</span>
-            </span>
+            </a>
           </div>
           <div className="text-lg  py-5">
-            Give your arguments some weight by finding a quote that supports it!
-            In a world brimming with information, standing out with a
-            well-supported argument is essential. Weaviate&apos;s powerful
-            vector database enhances this by allowing you to underpin your
-            points with the enduring wisdom of historical and contemporary
-            thinkers.
+            Find a quote to support any argument! Weaviate allows you to find
+            quotes to support your position based on semantic search, capturing
+            the meaning behind your query and returning the most related
+            results. Check out the{" "}
+            <a className="underline" href="https://github.com">
+              GitHub
+            </a>{" "}
+            to learn more.
           </div>
           <div className="flex flex-row justify-center sm:justify-start   items-center gap-3">
             <div className=" text-lg sm:block hidden">powered by</div>
