@@ -134,10 +134,10 @@ export default function QuoteFinder({
                       setSearchTerm(example);
                       handleSubmit(example);
                     }}
-                    className=" cursor-default relative shrink-0 self-start z-10"
+                    className="group cursor-pointer relative shrink-0 self-start z-10"
                   >
                     {example}
-                    <div className="absolute inset-x-0 bottom-0 h-2 bg-highlight -z-10"></div>
+                    <div className="absolute inset-x-0 bottom-0 h-2 group-hover:h-6  transition-all bg-highlight -z-10"></div>
                   </div>
                 ))}
               </div>

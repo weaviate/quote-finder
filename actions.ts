@@ -18,7 +18,7 @@ export async function findQuotesByArgument(searchTerm: string) {
   const cachedResult = await kv.get<QuoteType[]>(searchTerm);
 
   if (cachedResult) {
-    return cachedResult.filter((q) => q.quote.length <= 400);
+    return filterQuotes(cachedResult);
   }
 
   const res = await client.graphql
@@ -26,7 +26,8 @@ export async function findQuotesByArgument(searchTerm: string) {
     .withClassName("QuoteFinder")
     .withFields("quote author _additional {distance}")
     .withNearText({ concepts: [searchTerm] })
-    .withLimit(10)
+    .withLimit(20)
+    .withAutocut(3)
     .do();
 
   const distances = res.data.Get.QuoteFinder.map(
@@ -57,5 +58,40 @@ export async function findQuotesByArgument(searchTerm: string) {
 
   await kv.set(searchTerm, JSON.stringify(quotesAndAuthorsArray));
 
-  return quotesAndAuthorsArray.filter((q) => q.quote.length <= 400);
+  return filterQuotes(quotesAndAuthorsArray);
 }
+
+const filterQuotes = (quotes: QuoteType[]) => {
+  const filterWhitespaceErrors = (quotes: QuoteType[]) => {
+    const regex = new RegExp(/[a-z][A-Z]|[.,?!][A-Z]/g);
+
+    const filteredQuotes = quotes.filter((quote) => {
+      const errors = quote.quote.match(regex);
+      return errors === null;
+    });
+
+    return filteredQuotes;
+  };
+
+  const filterQuotesWithLength = (quotes: QuoteType[]) => {
+    const filteredQuotes = quotes.filter((quote) => {
+      return quote.quote.length <= 400;
+    });
+
+    return filteredQuotes;
+  };
+
+  const filterQuotesWithAuthorLength = (quotes: QuoteType[]) => {
+    const filteredQuotes = quotes.filter((quote) => {
+      return quote.author.length <= 200;
+    });
+
+    return filteredQuotes;
+  };
+
+  const filteredQuotes = filterQuotesWithAuthorLength(
+    filterWhitespaceErrors(filterQuotesWithLength(quotes))
+  );
+
+  return filteredQuotes;
+};
