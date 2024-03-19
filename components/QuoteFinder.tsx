@@ -12,13 +12,16 @@ import {
 } from "@heroicons/react/24/outline";
 import { examples } from "@/examples";
 import Link from "next/link";
+import Slider from "./Slider";
 
 export default function QuoteFinder({
   initialSearchTerm,
   initialSearchResults,
+  initialHybridSearchCombination,
 }: {
   initialSearchTerm?: string;
   initialSearchResults?: QuoteType[];
+  initialHybridSearchCombination?: number;
 }) {
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm ?? "");
   const [quotesAndAuthorsArray, setQuotesAndAuthorsArray] = useState<
@@ -31,20 +34,43 @@ export default function QuoteFinder({
 
   const [copiedText, copyToClipboard] = useCopyToClipboard();
 
-  const handleSubmit = async (newSearchTerm?: string) => {
-    (newSearchTerm ?? searchTerm).length > 0 &&
+  const [hybridSearchCombination, setHybridSearchCombination] = useState([
+    initialHybridSearchCombination ?? 0.5,
+  ]);
+
+  const handleSubmit = async (
+    newSearchTerm?: string,
+    newHybridSearchCombination?: number
+  ) => {
+    if ((newSearchTerm ?? searchTerm).length > 0) {
       startTransition(async () => {
         const quotesAndAuthorsArray = await findQuotesByArgument(
-          newSearchTerm ?? searchTerm
+          newSearchTerm ?? searchTerm,
+          newHybridSearchCombination ?? hybridSearchCombination[0]
         );
         console.log(quotesAndAuthorsArray);
+
         setQuotesAndAuthorsArray(quotesAndAuthorsArray);
+        const encodedSearchTerm = encodeURIComponent(
+          newSearchTerm?.trim() ?? searchTerm.trim()
+        );
+        const encodedHybridSearchCombination = encodeURIComponent(
+          newHybridSearchCombination ?? hybridSearchCombination[0]
+        );
+
+        console.log(encodedSearchTerm);
         window.history.pushState(
           {},
+
           "",
-          `/?search=${newSearchTerm ?? searchTerm}`
+          `
+          /?hybridSearchCombination=${encodedHybridSearchCombination}
+          &search=${encodedSearchTerm}
+          
+          `
         );
       });
+    }
   };
 
   return (
@@ -66,7 +92,8 @@ export default function QuoteFinder({
             if (searchTerm !== "") {
               setQuotesAndAuthorsArray([]);
             }
-            setSearchTerm(e.target.value);
+
+            setSearchTerm(e.currentTarget.value);
           }}
         />
 
@@ -91,6 +118,16 @@ export default function QuoteFinder({
           <MagnifyingGlassIcon className="h-5 w-5" />
         </button>
       </form>
+      <div className="max-w-[750px] py-3 flex flex-row gap-2 items-center justify-between">
+        <div className="text-sm">keyword search only</div>
+        <Slider
+          value={hybridSearchCombination}
+          setValue={setHybridSearchCombination}
+          handleSubmit={handleSubmit}
+          searchTerm={searchTerm}
+        />
+        <div className="text-sm text-right">vector search only</div>
+      </div>
       {isPending ? (
         <Skeleton times={5} />
       ) : (

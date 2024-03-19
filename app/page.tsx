@@ -2,6 +2,7 @@ import QuoteFinder from "@/components/QuoteFinder";
 import Image from "next/image";
 import { findQuotesByArgument } from "@/actions";
 import Link from "next/link";
+import { parse } from "path";
 
 export default async function Home({
   params,
@@ -11,9 +12,20 @@ export default async function Home({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const searchTerm: string = searchParams.search as string;
+  const hybridSearchCombination =
+    searchParams.hybridSearchCombination as string;
+
+  const parsedHybridSearchCombination = isNaN(
+    parseFloat(hybridSearchCombination)
+  )
+    ? undefined
+    : parseFloat(hybridSearchCombination);
 
   const initialSearchResults = searchTerm
-    ? await findQuotesByArgument(searchTerm)
+    ? await findQuotesByArgument(
+        searchTerm,
+        parsedHybridSearchCombination ?? 0.5
+      )
     : undefined;
 
   return (
@@ -55,6 +67,7 @@ export default async function Home({
         <QuoteFinder
           initialSearchTerm={searchTerm}
           initialSearchResults={initialSearchResults}
+          initialHybridSearchCombination={parsedHybridSearchCombination}
         />
       </div>
     </div>
