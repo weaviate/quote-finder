@@ -1,50 +1,39 @@
 "use server";
-import weaviate, {
-  WeaviateClient,
-  ObjectsBatcher,
-  ApiKey,
-} from "weaviate-ts-client";
+
+import weaviate from "weaviate-client/node";
+
 import { QuoteType } from "./types";
 import { kv } from "@vercel/kv";
-import { findQuotesByArgument as findQuotesByArgumentNewClient } from "@/actionsNewClient";
 
-const client: WeaviateClient = weaviate.client({
-  scheme: "https",
-  host: process.env.WCS_URL!!, // Replace with your endpoint
-  apiKey: new ApiKey(process.env.WCS_API_KEY!!), // Replace with your API key
-  headers: { "X-OpenAI-Api-Key": process.env.OPENAI_APIKEY!! }, // Replace with your inference API key
+const client = await weaviate.connectToWCS(process.env.WCS_URL!!, {
+  authCredentials: new weaviate.ApiKey(process.env.WCS_API_KEY!!),
+  headers: {
+    "X-OpenAI-Api-Key": process.env.OPENAI_APIKEY!!,
+  },
 });
 
 export async function findQuotesByArgument(searchTerm: string, alpha: number) {
-  // const rs = await findQuotesByArgumentNewClient(searchTerm, alpha);
-  // return rs;
   const cachedResult = await kv.get<QuoteType[]>(searchTerm + alpha.toString());
 
   if (cachedResult) {
     return filterQuotes(cachedResult);
   }
 
-  const res = await client.graphql
-    .get()
-    .withClassName("QuoteFinder")
-    .withFields("quote author _additional {score}")
-    .withHybrid({
-      query: searchTerm,
-      alpha: alpha,
-    })
-    .withLimit(20)
-    .withAutocut(3)
-    .do();
-
-  const quotesAndAuthorsArray: QuoteType[] = res.data.Get.QuoteFinder.map(
-    (quote: any) => ({
-      quote: quote.quote,
-      author: quote.author,
-      distance: parseFloat(quote._additional.score),
-    })
+  const collection = await client.collections.get<Omit<QuoteType, "distance">>(
+    "QuoteFinder"
   );
 
-  console.log(JSON.stringify(quotesAndAuthorsArray));
+  const { objects } = await collection.query.hybrid(searchTerm, {
+    limit: 20,
+    alpha: alpha,
+    returnMetadata: ["distance", "score", "explainScore"],
+  });
+
+  const quotesAndAuthorsArray: QuoteType[] = objects.map((quote) => ({
+    ...quote.properties,
+    // distance: quote.metadata?.distance!!,
+    distance: 0.2,
+  }));
 
   await kv.set(
     searchTerm + alpha.toString(),

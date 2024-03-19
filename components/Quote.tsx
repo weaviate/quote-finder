@@ -2,7 +2,11 @@ import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { useState, useEffect } from "react";
 import { QuoteType } from "@/types";
 import CountUp from "react-countup";
-import { CheckIcon, ClipboardDocumentIcon } from "@heroicons/react/24/outline";
+import {
+  CheckIcon,
+  ClipboardDocumentIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/24/outline";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
 import Typewriter from "typewriter-effect";
@@ -56,8 +60,11 @@ export default function Quote({
           <div className="group text-xl shrink-0 relative font-serif font-bold rounded-full shadow-lg bg-transparent border-[1px] size-12 sm:size-24 items-center justify-center flex  text-serif  ">
             {index + 1}.{/* {quote.distance} */}
             <div className="absolute flex flex-col items-center sm:-bottom-2  -bottom-4">
-              <div className="  cursor-pointer  text-xs   border-[1px] rounded-lg w-16 text-center shadow-lg  px-2 py-1 bg-highlight  text-black ">
-                .<CountUp end={quote.distance * 1000} />
+              <div className="  cursor-pointer  text-xs flex flex-row justify-center items-center gap-1  border-[1px] rounded-lg w-16 text-center shadow-lg  px-2 py-1 bg-highlight  text-black ">
+                <span>
+                  .<CountUp end={quote.distance * 1000} />{" "}
+                </span>
+                <ChevronDownIcon height={12} width={12} />
               </div>
               <div className="absolute rounded-lg p-2 mt-8 border-[1px] shadow-lg text-xs w-48 z-40 text-center  bg-stone-100  opacity-0 transition-all duration-250 group-hover:opacity-100">
                 The score {quote.distance.toFixed(3)} indicates the distance, or
