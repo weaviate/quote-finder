@@ -62,14 +62,28 @@ export default function Quote({
             <div className="absolute flex flex-col items-center sm:-bottom-2  -bottom-4">
               <div className="  cursor-pointer  text-xs flex flex-row justify-center items-center gap-1  border-[1px] rounded-lg w-16 text-center shadow-lg  px-2 py-1 bg-highlight  text-black ">
                 <span>
-                  .<CountUp end={quote.distance * 1000} />{" "}
+                  {quote.distance >= 1 ? (
+                    "1.000"
+                  ) : (
+                    <div>
+                      .<CountUp end={quote.distance * 1000} />
+                    </div>
+                  )}
                 </span>
                 <ChevronDownIcon height={12} width={12} />
               </div>
               <div className="absolute rounded-lg p-2 mt-8 border-[1px] shadow-lg text-xs w-48 z-40 text-center  bg-stone-100  opacity-0 transition-all duration-250 group-hover:opacity-100">
-                The score {quote.distance.toFixed(3)} indicates the distance, or
-                semantic relevance, between the quote and your query: “
-                {searchTerm}”.
+                The score {quote.distance.toFixed(3)} indicates the quote's
+                relevance to your query: "{searchTerm}". It's the added
+                combination of the scores from the keyword search results and
+                the vector search results multiplied by the alpha parameter.
+                &nbsp;
+                <a
+                  className="underline"
+                  href="https://weaviate.io/blog/hybrid-search-fusion-algorithms#full-example"
+                >
+                  Read more about the hybrid search fusion algorithms here
+                </a>
               </div>
             </div>
           </div>

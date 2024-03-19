@@ -38,10 +38,13 @@ export default async function Home({
             </a>
           </div>
           <div className="text-lg  py-5">
-            Find a quote to support any argument! Weaviate allows you to find
-            quotes to support your position based on semantic search, capturing
-            the meaning behind your query and returning the most related
-            results. Check out the{" "}
+            Find a quote to support any argument! Weaviate will use hybrid
+            search, a combination of semantic search and keyword search, to find
+            the quotes that best match your query. Semantic search allows you to
+            search on the meaning of the text, which is great for big ideas or
+            general arguments, while keyword search looks for exact matches
+            between the query and the quotes, which works well if you have an
+            exact phrase in mind. Check out the&nbsp;
             <a className="underline" href="https://github.com">
               GitHub
             </a>{" "}
