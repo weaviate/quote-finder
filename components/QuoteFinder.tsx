@@ -118,22 +118,20 @@ export default function QuoteFinder({
           <MagnifyingGlassIcon className="h-5 w-5" />
         </button>
       </form>
-      <div className="max-w-[750px] py-3 flex flex-row gap-2 items-center justify-between">
-        <div className="text-sm">keyword search only</div>
-        <Slider
-          value={hybridSearchCombination}
-          setValue={setHybridSearchCombination}
-          handleSubmit={handleSubmit}
-          searchTerm={searchTerm}
-        />
-        <div className="text-sm text-right">vector search only</div>
-      </div>
+
+      <Slider
+        value={hybridSearchCombination}
+        setValue={setHybridSearchCombination}
+        handleSubmit={handleSubmit}
+        searchTerm={searchTerm}
+      />
+
       {isPending ? (
         <Skeleton times={5} />
       ) : (
         <div>
           {quotesAndAuthorsArray.length > 0 ? (
-            <div className="flex flex-row items-center justify-between max-w-prose py-5">
+            <div className="flex flex-row items-center justify-between max-w-[750px] py-5">
               <div className="uppercase text-sm">
                 {quotesAndAuthorsArray.length} results
               </div>

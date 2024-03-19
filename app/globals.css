@@ -23,3 +23,7 @@ body {
 .animate-pop-in {
   animation: popIn 0.5s ease-out;
 }
+
+::selection {
+  background: #a0ffa4;
+}
