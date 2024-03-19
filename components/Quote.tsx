@@ -73,10 +73,10 @@ export default function Quote({
                 <ChevronDownIcon height={12} width={12} />
               </div>
               <div className="absolute rounded-lg p-2 mt-8 border-[1px] shadow-lg text-xs w-48 z-40 text-center  bg-stone-100  opacity-0 transition-all duration-250 group-hover:opacity-100">
-                The score {quote.distance.toFixed(3)} indicates the quote's
-                relevance to your query: "{searchTerm}". It's the added
-                combination of the scores from the keyword search results and
-                the vector search results multiplied by the alpha parameter.
+                The score {quote.distance.toFixed(3)} indicates the quote&apos;s
+                relevance to your query: &quot;{searchTerm}&quot;. It&apos;s the
+                added combination of the scores from the keyword search results
+                and the vector search results multiplied by the alpha parameter.
                 &nbsp;
                 <a
                   className="underline"
