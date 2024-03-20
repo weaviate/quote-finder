@@ -33,7 +33,7 @@ export async function findQuotesByArgument(searchTerm: string, alpha: number) {
       alpha: alpha,
     })
     .withLimit(20)
-    .withAutocut(3)
+    // .withAutocut(3)
     .do();
 
   const quotesAndAuthorsArray: QuoteType[] = res.data.Get.QuoteFinder.map(
