@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html className=" overflow-x-hidden" lang="en">
       <body className={`${inter.className} ${noto_serif.variable}`}>
         {children}
       </body>

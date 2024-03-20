@@ -27,7 +27,7 @@ export default function Quote({
 
   function splitTextIncludeMatches(inputText: string, words: string[]) {
     // Construct the regex pattern from the array of words
-    const regexPattern = `(${words.join("|")})`;
+    const regexPattern = words.length ? `(${words.join("|")})` : "a^";
     const regex = new RegExp(regexPattern, "i"); // 'i' for case-insensitive match
 
     // Split the text and include matches
