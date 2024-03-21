@@ -15,9 +15,9 @@ const client = await weaviate.connectToWCS(process.env.WCS_URL!!, {
 export async function findQuotesByArgument(searchTerm: string, alpha: number) {
   const cachedResult = await kv.get<QuoteType[]>(searchTerm + alpha.toString());
 
-  // if (cachedResult) {
-  //   return filterQuotes(cachedResult);
-  // }
+  if (cachedResult) {
+    return filterQuotes(cachedResult);
+  }
 
   const collection = await client.collections.get<Omit<QuoteType, "distance">>(
     "QuoteFinder"
