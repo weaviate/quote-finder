@@ -16,8 +16,8 @@ const client: WeaviateClient = weaviate.client({
 });
 
 export async function findQuotesByArgument(searchTerm: string, alpha: number) {
-  // const rs = await findQuotesByArgumentNewClient(searchTerm, alpha);
-  // return rs;
+  const rs = await findQuotesByArgumentNewClient(searchTerm, alpha);
+  return rs;
   const cachedResult = await kv.get<QuoteType[]>(searchTerm + alpha.toString());
 
   if (cachedResult) {
