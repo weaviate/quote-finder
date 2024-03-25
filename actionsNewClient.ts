@@ -1,6 +1,6 @@
 "use server";
 
-import weaviate from "weaviate-client/node";
+import weaviate from "weaviate-client";
 
 import { QuoteType } from "./types";
 import { kv } from "@vercel/kv";
@@ -26,7 +26,7 @@ export async function findQuotesByArgument(searchTerm: string, alpha: number) {
   const { objects } = await collection.query.hybrid(searchTerm, {
     limit: 20,
     alpha: alpha,
-    returnMetadata: ["distance", "score", "explainScore"],
+    returnMetadata: ["score", "explainScore"],
     returnProperties: ["quote", "author"],
   });
 
