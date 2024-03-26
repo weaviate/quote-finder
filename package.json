@@ -20,7 +20,6 @@
     "react": "^18",
     "react-countup": "^6.5.0",
     "react-dom": "^18",
-    "typewriter-effect": "^2.21.0",
     "weaviate-client": "^3.0.0-beta.20"
   },
   "devDependencies": {
