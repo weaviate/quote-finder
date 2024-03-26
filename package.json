@@ -21,8 +21,7 @@
     "react-countup": "^6.5.0",
     "react-dom": "^18",
     "typewriter-effect": "^2.21.0",
-    "weaviate-client": "^3.0.0-beta.20",
-    "weaviate-ts-client": "^2.1.1"
+    "weaviate-client": "^3.0.0-beta.20"
   },
   "devDependencies": {
     "@types/node": "^20",
